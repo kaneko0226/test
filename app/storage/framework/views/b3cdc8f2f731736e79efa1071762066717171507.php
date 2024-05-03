@@ -139,6 +139,9 @@ unset($__errorArgs, $__bag); ?>
                                     </div>
                                 </div>
                             </form>
+                            <a href="<?php echo e(route('register')); ?>">Register</a>
+                            </form>
+                            <a href="<?php echo e(route('reset.form')); ?>">パスワードをお忘れの方</a>
                         </div>
                     </div>
                 </div>

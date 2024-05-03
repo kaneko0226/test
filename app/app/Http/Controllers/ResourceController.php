@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Diary;
+use App\Profile;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ResourceController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +19,27 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        // echo "TEST";
-        return view('auth.login');
+
+        // $review = Diary::withCount('likes')->orderBy('id', 'desc')->paginate(10);
+        // dd($review);
+        // // $param = [
+        // //     'reviews' => $review,
+        // // ];
+
+
+        $profile = new Profile;
+        $diary = new Diary;
+        $user_id = Auth::user()->id;
+        $role = Auth::user()->role;
+
+        $profileall = $profile->all()->where('profiles_id', '=', $user_id);
+        $diaryall = $diary->all()->where('user_id', '=', $user_id);
+
+        return view('home', [
+            'profiles' => $profileall,
+            'diaries' => $diaryall,
+            // $param
+        ]);
     }
 
     /**
@@ -36,7 +60,24 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // Log::debug('testtesttesttesttesttesttest');
+
+        $diary = new Diary;
+        $user_id = Auth::user()->id;
+        $diary->user_id = $user_id;
+        $diary->title = $request->title;
+        $diary->comment = $request->comment;
+        $diary->image = $request->image;
+        // dd($diary);
+
+        // 画像投稿ない場合
+        if (!empty($request->image)) {
+            $image_path = $request->file('image')->store('public/images');
+            $diary->image = basename($image_path);
+        }
+        // // var_dump($diary->toarray());
+        $diary->save();
+        return redirect('/resource');
     }
 
     /**
@@ -58,7 +99,7 @@ class ResourceController extends Controller
      */
     public function edit($id)
     {
-        //
+        // echo "editeditediteditediteditedit";
     }
 
     /**
@@ -80,7 +121,5 @@ class ResourceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
-    }
+    { }
 }

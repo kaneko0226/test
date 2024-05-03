@@ -111,6 +111,9 @@
                                     </div>
                                 </div>
                             </form>
+                            <a href="{{ route('register') }}">Register</a>
+                            </form>
+                            <a href="{{ route('reset.form') }}">パスワードをお忘れの方</a>
                         </div>
                     </div>
                 </div>

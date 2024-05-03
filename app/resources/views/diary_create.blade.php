@@ -13,30 +13,29 @@
         </ul>
     </div>
     @endif -->
-
-<form action="/" method="post">
+<?php echo Auth::user(); ?>
+<form method="post" action="../resource" enctype='multipart/form-data'>
     @csrf
-
     <div>
-        <label for="title">タイトル：</label>
-        <input id="title" type="text" name="title" value="{{ old('title') }}">
+        <label>タイトル：</label>
+        <input type="text" name="title" value="{{ old('title') }}">
         <!-- @if($errors->has('title'))
             <p>{{ $errors->first('title') }}</p>
             @endif -->
     </div>
-
     <div>
-        <label for="comment">投稿内容：</label>
-        <input id="comment" type="text" name="comment" value="{{ old('comment') }}">
+        <label>投稿内容：</label>
+        <input type="text" name="comment" value="{{ old('comment') }}">
         <!-- @if($errors->has('comment'))
             <p>{{ $errors->first('comment') }}</p>
             @endif -->
     </div>
-
-
     <div>
-        <button type="submit" name="submitBtnVal">登録</button>
+        <label>画像投稿：</label>
+        <input type="file" name="image">
     </div>
+
+    <button type="submit">登録</button>
 
 </form>
 

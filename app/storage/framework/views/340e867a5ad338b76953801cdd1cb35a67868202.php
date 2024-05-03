@@ -13,30 +13,29 @@
         </ul>
     </div>
     <?php endif; ?> -->
-
-<form action="/" method="post">
+<?php echo Auth::user(); ?>
+<form method="post" action="../resource" enctype='multipart/form-data'>
     <?php echo csrf_field(); ?>
-
     <div>
-        <label for="title">タイトル：</label>
-        <input id="title" type="text" name="title" value="<?php echo e(old('title')); ?>">
+        <label>タイトル：</label>
+        <input type="text" name="title" value="<?php echo e(old('title')); ?>">
         <!-- <?php if($errors->has('title')): ?>
             <p><?php echo e($errors->first('title')); ?></p>
             <?php endif; ?> -->
     </div>
-
     <div>
-        <label for="comment">投稿内容：</label>
-        <input id="comment" type="text" name="comment" value="<?php echo e(old('comment')); ?>">
+        <label>投稿内容：</label>
+        <input type="text" name="comment" value="<?php echo e(old('comment')); ?>">
         <!-- <?php if($errors->has('comment')): ?>
             <p><?php echo e($errors->first('comment')); ?></p>
             <?php endif; ?> -->
     </div>
-
-
     <div>
-        <button type="submit" name="submitBtnVal">登録</button>
+        <label>画像投稿：</label>
+        <input type="file" name="image">
     </div>
+
+    <button type="submit">登録</button>
 
 </form>
 

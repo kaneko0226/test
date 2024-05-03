@@ -18,6 +18,7 @@ class CreateDiariesTable extends Migration
             $table->integer('user_id');
             $table->string('title', 30);
             $table->string('comment')->nullable();
+            $table->string('image');
             $table->integer('pump')->default(0);
             $table->integer('del_flg')->default(0);
             $table->timestamps();

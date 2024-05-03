@@ -31,9 +31,10 @@ class DisplayController extends Controller
 
     public function diary_editing(int $id)
     {
-        return view('diary_editing', [
-            'id' => $id,
-        ]);
+        echo $id;
+        // return view('diary_editing', [
+        //     'id' => $id,
+        // ]);
     }
 
     public function diary_editing_go(int $id, Request $request)
@@ -56,7 +57,7 @@ class DisplayController extends Controller
         $diaries = $diary->where('diary_id', '=', $id);
         $diaries->delete();
 
-        return redirect('/home');
+        return view('diary_delete_comp');
         // echo $id;
         //     return view('diary_delete');
         // }
@@ -72,4 +73,35 @@ class DisplayController extends Controller
             'diaries' => $diaryall,
         ]);
     }
+
+    // 検索-----------------------------------------------------------------------------------
+
+    public function postsearch()
+    {
+        $diary = new Diary;
+        $profile = new Profile;
+
+        $user_id = Auth::user()->id;
+        $diaries = $diary->all()->where('user_id', '=', $user_id);
+        $profileall = $profile->all()->where('profiles_id', '=', $user_id);
+
+        // var_dump($diaries->toArray());
+        $diaries = $diaries->where('pump', '>=', $_POST['pump']);
+        if (!empty($_POST['from'])) {
+            $diaries = $diaries->where('created_at', '>=', $_POST['from']);
+        }
+        if (!empty($_POST['until'])) {
+            $diaries = $diaries->where('created_at', '=<', $_POST['until']);
+        }
+
+        // var_dump($diaries->toArray());
+
+        return view('home', [
+            'diaries' => $diaries,
+            'profiles' => $profileall,
+
+        ]);
+    }
 }
+
+    // --------------------------------------------------------------------------------------
